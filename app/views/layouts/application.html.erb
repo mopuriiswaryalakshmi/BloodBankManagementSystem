@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bloodbanksmanagmentsystem</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "https://www.google.com/jsapi" %>
+
+  <link href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet" /><!-- for jquery css-->
+
+  
+
+  <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script><!-- for jquery js-->
+
+<!-- for jquery end -->
+
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <%= csrf_meta_tags %>
+</head>
+
+
+
+<body>
+<div class="container">
+
+
+   <% if user_signed_in? %>
+      welcome <%= current_user.username %>
+      <%#current_user.email %>  <!-- at starting if u want to show user email--> 
+        <% if can? :read, User.first  %>
+            <%= link_to "view all users", users_path %>
+        <%end%>
+        <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Logo</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li><%= link_to "BloodBanks", blood_banks_path %></li>
+        <li><%= link_to "Stocks", stocks_path %></li>
+        <li><%= link_to "PersonDetails", person_details_path %></li>
+        <li><%= link_to "Require Donar", require_donars_path %><br/></li>
+        
+      </ul>
+
+      
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <!--<a href="#">Link</a></li>-->
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Account Setting", edit_user_registration_path %> </li>
+            <li><%= link_to "Logout", destroy_user_session_path, method: :delete %>  </li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  
+  
+</nav>
+
+  
+<% else %>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Logo</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li><%= link_to "BloodBanks", blood_banks_path %></li>
+        <li><%= link_to "Stocks", stocks_path %></li>
+        <li><%# link_to "Add person details", new_person_detail_path %></li>
+        <li><%= link_to "Add person details", new_person_detail_path %></li>
+        <li><%# link_to "Require Donar", require_donars_path %><br/></li>
+        <li><%= link_to "Require Donar", require_donars_search_form_path %><br/></li>
+        
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+
+        <!--<li><a href="#">DashBord</a></li>-->
+
+        <li><%= link_to "Login", new_user_session_path %></li>
+        <li><%= link_to "Registraion", new_user_registration_path %></li> 
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+  <% end %>
+
+
+<%= alert %>
+<%= notice %>
+
+<%= yield %>
+</div>
+</body>
+</html>
+
+
+

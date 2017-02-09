@@ -1,0 +1,382 @@
+<div class="pageheader">
+        <h2><%= @locality.name.capitalize %></h2><br/>
+        <% @locality.blood_banks.each do |bloodbank| %>
+        <h3>bloodbank.name</h3>
+</div>
+
+<div class="thumbnail">
+  <div class="col-md-3">
+    <% flag = 0 %>
+      <% BloodGroup.all.each do |bloodgroup| %>
+      <b><%= bloodgroup.name %></b>
+      <table>
+        <thead class="table table-bordered">
+          <tr>
+            <th>Component Type</th>
+            <th>Total Stocks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ComponentType.all.each do |comp| %>
+              <tr>
+              <% @locality.blood_banks.each do |bloodbank| %>
+              <% @total =  bloodbank.blood_availabilities.where('component_type_id = ?', comp.id).pluck(:total_stocks)%>
+
+              <td><%= comp.name%></td>
+              <td><%= @total[flag] %></td>
+              </tr>
+          <% end %>
+          <% end %>
+        </tbody>  
+      </table>
+    <% flag += 1 %>
+     <%end%>
+  </div>
+</div>
+
+
+<div class="pageheader">
+        <h2><%= @locality.name.capitalize %></h2><br/>
+</div>
+
+
+<% flag = 0 %>
+     <div class="row">
+     <div class="col-md-3">
+       <% BloodGroup.all.each do |bloodgroup| %>
+       
+
+          <div >
+                
+                <h2><%= bloodgroup.name %></h2>
+              </div>
+          <table class="table table-bordered">
+             
+              <thead>
+                <tr>
+                  <th>Component Type</th>
+                  <th>Total Stocks</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              
+                              <% ComponentType.all.each do |comp| %>
+                            <tr>
+                                <% @locality.blood_banks.each do |bloodbank| %>
+                                <% @total =  bloodbank.blood_availabilities.where('component_type_id = ?', comp.id).pluck(:total_stocks)%>
+                                     <td><%= comp.name%></td>
+                                     <td><%= @total[flag] %></td>
+                            </tr>
+                                <% end %>
+                                <% end %>
+            <%end%>
+                                
+            </tbody>
+            </table>
+
+       </div>
+     </div>
+     <% flag += 1 %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+<div class="pageheader">
+        <h2><%= @locality.name.capitalize %></h2><br/><br/>
+      </div>
+
+       <div class="row">
+      <% @locality.blood_banks.each do |bloodbank| %>
+      <div class="col-md-6">
+      <ol>
+      <li><b> BloodBanks Name </b> : <%= bloodbank.name %><br/></li>
+      <li><b> BloodBank Address </b> : <%= bloodbank.address %><br/></li>
+      <li><b> District </b> : <%= bloodbank.district.name %><br/></li>
+      <li><b> State </b> : <%= bloodbank.state.name %><br/></li>
+      <li><b> Email </b> : <%= bloodbank.email %><br/></li>
+      <li><b> Mobile </b> : <%= bloodbank.mobile %><br/></li>
+      <li><b> Landline Number </b> : <%= bloodbank.landline_number %><br/></li>
+      <li><b> Manager </b> : <%= bloodbank.manager %><br/></li>
+      <li><b> Stock </b></li> :
+      </ol>
+    </div>
+
+    <div class="col-md-6">
+      <div class="pageheader">
+              <h2>BloodBank Image</h2>
+        </div>
+               <% @locality.blood_banks.each do |bloodbank| %>
+                     <%= image_tag(bloodbank.cover.url) if bloodbank.cover %><br/><br/>
+                <% end %>
+    </div>
+
+    <% end %>
+      
+    
+     </div>
+
+
+     <% flag = 0 %>
+     <div class="row">
+       <% BloodGroup.all.each do |bloodgroup| %>
+       <div class="col-md-3">
+
+          <div >
+                
+                <h2><%= bloodgroup.name %></h2>
+              </div>
+          <table class="table table-bordered">
+             
+              <thead>
+                <tr>
+                  <th>Component Type</th>
+                  <th>Total Stocks</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              
+                              <% ComponentType.all.each do |comp| %>
+                            <tr>
+                                <% @locality.blood_banks.each do |bloodbank| %>
+                                <% @total =  bloodbank.blood_availabilities.where('component_type_id = ?', comp.id).pluck(:total_stocks)%>
+                                     <td><%= comp.name%></td>
+                                     <td><%= @total[flag] %></td>
+                            </tr>
+                                <% end %>
+                                <% end %>
+            <%end%>
+                                
+            </tbody>
+            </table>
+
+       </div>
+     </div>
+     <% flag += 1 %>
+-->    
+  
+<!--    
+        <% flag = 0 %>
+                <table class="table table-bordered">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="pageheader">
+                        <% BloodGroup.all.each do |bloodgroup| %>
+                        <h2><%= bloodgroup.name %></h2>
+                      </div>
+                          <thead>
+                            <tr>
+                              <th>Component Type</th>
+                              <th>Total Stocks</th>
+                            </tr>
+                          </thead>
+                    </div>
+                            
+                            <tbody>
+                              <div class="col-md-3">
+                                   <div class="pageheader"> 
+                                          <% ComponentType.all.each do |comp| %>
+                                    </div>
+                                        <tr>
+                                            <% @locality.blood_banks.each do |bloodbank| %>
+                                            <% @total =  bloodbank.blood_availabilities.where('component_type_id = ?', comp.id).pluck(:total_stocks)%>
+                                                 <td><%= comp.name%></td>
+                                                 <td><%= @total[flag] %></td>
+                                        </tr>
+                                            <% end %>
+                                            <% end %>
+                        <%end%>
+                               </div>                
+                            </tbody>
+                  </div>              
+                </table>               
+        <% flag += 1 %>
+                                       
+                                           
+
+-->                                        
+                                         
+                                        
+                                            
+  
+
+
+    
+
+
+
+
+              
+
+
+
+
+
+
+
+
+<!--
+<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>BloodGroup</th>
+          <th>Component Type</th>
+          <th>Total Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%# count = 1 %>
+      <%# bloodbank.blood_availabilities.each do |presentstock| %>
+        <tr>
+          <td><%# presentstock.blood_group.name %></td>
+          <td><%# presentstock.component_type.name %></td>
+          <td><%# presentstock.total_stocks %></td>
+        </tr>
+        <%# count += 1 %>
+        <%# end %>
+        <%# end %>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="pageheader">
+      <h2><%= @locality.name.capitalize %></h2>
+    </div>
+    <%# @locality.blood_banks.each do |bloodbank| %>
+    <ol>
+    <b> BloodBanks Name </b> : <li><%# bloodbank.name %></li><br/>
+    <b> BloodBank Address </b> : <li><%# bloodbank.address %></li><br/>
+    <b> District </b> : <li><%# bloodbank.district.name %></li><br/>
+    <b> State </b> : <li><%# bloodbank.state.name %></li><br/>
+    <b> Email </b> : <li><%# bloodbank.email %></li><br/>
+    <b> Mobile </b> : <li><%# bloodbank.mobile %></li><br/>
+    <b> Landline Number </b> : <li><%# bloodbank.landline_number %></li><br/>
+    <b> Manager </b> : <li><%# bloodbank.manager %></li><br/>
+    <%# end %>
+    </ol>
+  </div>
+
+   <div class="col-md-5">
+          <div class="pageheader">
+                  <%# @locality.blood_banks.each do |bloodbank| %>
+                     <%# image_tag(bloodbank.cover.url) if bloodbank.cover %>
+                  <%# end %>
+            </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="pageheader">
+      <h2><%= @locality.name.capitalize %></h2>
+    </div>
+        <table class="table table-striped">
+         <thead>
+          <tr>
+            <th>BloodBanks Name</th>
+            <th>BloodBank Address</th>
+            <th>District</th>
+            <th>State</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Landline Number</th>
+            <th>Manager</th>
+
+          </tr>
+         </thead>
+         <tbody>
+           <%# @locality.blood_banks.each do |bloodbank| %>
+
+             <tr>
+               <td><%# bloodbank.name%></td>
+               <td><%# bloodbank.address %></td>
+               <td><%# bloodbank.district.name %></td>
+               <td><%# bloodbank.state.name %></td>
+               <td><%# bloodbank.email %></td>
+               <td><%# bloodbank.mobile %></td>
+               <td><%# bloodbank.landline_number %></td>
+               <td><%# bloodbank.manager %></td>
+
+
+               
+             
+              </tr>
+              <%# end %>
+          </tbody>
+          </table>
+
+              <div class="col-md-5">
+                <div class="pageheader">
+                  <%# @locality.blood_banks.each do |bloodbank| %>
+                     <%# image_tag(bloodbank.cover.url) if bloodbank.cover %>
+                  <%# end %>
+                </div>
+              </div>
+</div>
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3><%= @locality.name.capitalize %></h3>
+<table>
+ <thead>
+  <tr>
+    <th>BloodBanks Name</th>
+    <th>BloodBank Address</th>
+  </tr>
+ </thead>
+ <tbody>
+   <%# @locality.blood_banks.each do |bloodbank| %>
+
+     <tr>
+       <td><%# bloodbank.name%></td>
+       <td><%# bloodbank.address %></td>
+     </tr>
+     <%# end %>
+  </tbody>
+  </table>
+  -->

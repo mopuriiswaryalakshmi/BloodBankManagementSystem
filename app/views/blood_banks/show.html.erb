@@ -1,0 +1,100 @@
+<div class="thumbnail">
+<h1>BloodBank - <%= @bloodbank.name %></h1>
+<b>Address</b>-<br/> <%= @bloodbank.address %>,
+ <%= @bloodbank.state.name %>,
+ <%= @bloodbank.district.name %>,
+ <%= @bloodbank.locality.name %><br/>.
+
+<%= image_tag(@bloodbank.cover.url) if @bloodbank.cover %>
+<h2> Stocks List </h2><br/> 
+
+ 	<% flag = 0 %>
+ 	<% BloodGroup.all.each do |bloodgroup| %>
+ 	<b><%= bloodgroup.name %></b>
+ 	<table>
+ 		<thead>
+ 			<tr>
+ 				<th>Component Type</th>
+ 				<th>Total Stocks</th>
+        
+ 			</tr>
+ 		</thead>
+ 		<tbody>
+ 			<% graph_data = {} %>
+    <% ComponentType.all.each do |comp| %>
+		<!-- create hash graph_data = {} -->
+    		<tr>
+ 			<% @total =  @bloodbank.blood_availabilities.where('component_type_id = ?', comp.id).pluck(:total_stocks)%>
+      <td><%= comp.name%></td>
+ 				<%# @total.each do |total| %>
+        <td><%= @total[flag] %></td>
+ 				<%# end %>
+ 				 </tr>
+         <!-- graph_data[comp.name] = @total[flag]
+         -->
+         <% graph_data[comp.name] = @total[flag] %>
+         <% end %>
+         
+      </tbody>	
+ 	</table>
+  <!-- create graph command --> 
+  <!-- <%# bar_chart(graph_data) %>-->
+  
+
+
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation"><a href="#pie_chart" aria-controls="pie_chart" role="tab" data-toggle="tab">Piechart</a></li>
+    
+    <li role="presentation" class="active"><a href="#bar_chart" aria-controls="bar_chart" role="tab" data-toggle="tab">Barchart</a></li>
+    <li role="presentation"><a href="#column_chart" aria-controls="column_chart" role="tab" data-toggle="tab">Columnchart</a></li>
+      </ul>
+
+  <!-- Tab panes -->
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="pie_chart">
+      <%= pie_chart(graph_data) %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane active" id="bar_chart">
+      <%= bar_chart(graph_data) %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="column_chart">
+      <%= column_chart(graph_data) %>
+    </div>
+    
+</div>
+
+
+
+
+
+
+<% flag += 1 %>
+ <%end%>
+
+
+
+<%# link_to "edit", edit_blood_bank_path(@bloodbank.id),class: "btn btn-info" %>
+<% if can? :update, BloodBank %>
+<%= link_to  edit_blood_bank_path(@bloodbank.id),class: "btn btn-primary" do %>
+<i class="glyphicon glyphicon-eye-open" ></i>Edit
+<%end%>
+<%end%>
+
+
+
+<%# link_to "destroy", blood_bank_path(@bloodbank.id),method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-info"%>
+<% if can? :destroy, BloodBank %>
+<%= link_to  blood_bank_path(@bloodbank.id),method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-primary" do%>
+<i class="glyphicon glyphicon-edit"></i>Destroy
+<%end%>
+<%end%>
+
+<%= link_to "BACK", blood_banks_path, class: "btn btn-primary" %>
+
+</div>
